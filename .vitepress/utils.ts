@@ -1,7 +1,8 @@
 import fs from "node:fs";
 import { resolve } from "node:path";
 
-export function numberToChinese(num) {
+export function numberToChinese(num: number): string {
+  // 基础数字和单位映射
   const chineseNums = [
     "零",
     "一",
@@ -14,25 +15,61 @@ export function numberToChinese(num) {
     "八",
     "九",
   ];
-  const chineseUnits = ["", "十", "百", "千"];
-  if (num === 0) {
-    return chineseNums[0];
-  }
-  let chineseStr = "";
-  let unitIndex = 0;
-  while (num > 0) {
-    const digit = num % 10;
-    if (digit !== 0) {
-      // 处理非零数字
-      chineseStr = chineseNums[digit] + chineseUnits[unitIndex] + chineseStr;
-    } else if (chineseStr.charAt(0) !== chineseNums[0]) {
-      // 处理连续的零，只保留一个零
-      chineseStr = chineseNums[0] + chineseStr;
+  const chineseUnits = [
+    "",
+    "十",
+    "百",
+    "千",
+    "万",
+    "十万",
+    "百万",
+    "千万",
+    "亿",
+  ];
+
+  // 处理 0
+  if (num === 0) return "零";
+
+  // 处理负数
+  if (num < 0) return "负" + numberToChinese(-num);
+
+  // 特殊处理 10
+  if (num === 10) return "十";
+
+  // 处理小于 10000 的数字
+  function convertSection(n: number): string {
+    if (n === 0) return "";
+
+    let result = "";
+    let hasZero = false;
+    let unitIndex = 0;
+
+    while (n > 0) {
+      const digit = n % 10;
+
+      if (digit === 0) {
+        hasZero = true;
+      } else {
+        if (hasZero && result.length > 0) {
+          result = "零" + result;
+        }
+        result = chineseNums[digit] + chineseUnits[unitIndex] + result;
+        hasZero = false;
+      }
+
+      unitIndex++;
+      n = Math.floor(n / 10);
     }
-    num = Math.floor(num / 10);
-    unitIndex++;
+
+    // 处理 11-19 的特殊情况
+    if (result.startsWith("一十")) {
+      result = result.substring(1);
+    }
+
+    return result;
   }
-  return chineseStr;
+
+  return convertSection(num);
 }
 
 export function initSideBar() {
@@ -81,6 +118,7 @@ export function initSideBar() {
   const rootDirs = fs.readdirSync(root).filter(noStartsWith("."));
 
   const sidebar = rootDirs
+    .sort((a, b) => Number(a.split("-")[0]) - Number(b.split("-")[0]))
     .map((dir) => {
       return readDir(dir, resolve(root, dir), `pages`);
     })
