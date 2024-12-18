@@ -8,7 +8,7 @@ hero:
   text: ""
   tagline: "重新梳理前端知识，重学一次前端，挑战自己的JS、算法、设计模式，框架源码、浏览器知识储备"
   image:
-    src: /fe-skill.png
+    src: /fe-skill.webp
   actions:
     - theme: brand
       text: 设计模式
