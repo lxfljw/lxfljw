@@ -29,6 +29,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "viewerjs": "^1.11.7",
+    "vitepress-plugin-comment-with-giscus": "^1.1.15",
     "vitepress-plugin-image-viewer": "^1.1.5",
     "vue": "^3.4.15"
   },

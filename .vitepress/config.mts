@@ -1,6 +1,6 @@
 import { defineConfig } from "vitepress";
 import { HOST_NAME, initSideBar } from "./utils";
-
+import giscusTalk from "vitepress-plugin-comment-with-giscus";
 const sidebar = initSideBar();
 
 // console.log("%o sidebar-", sidebar);
