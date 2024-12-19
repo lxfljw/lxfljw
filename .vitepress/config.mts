@@ -15,7 +15,7 @@ export default defineConfig({
     "重新梳理前端知识，重学一次前端，挑战自己的JS、算法、设计模式，框架源码、浏览器知识储备",
   base: "/",
   head: [
-    ["link", { rel: "icon", href: "/logo.awebp" }],
+    ["link", { rel: "icon", href: "/logo.png" }],
     // <meta name="baidu-site-verification" content="codeva-ypCbR4Xoyf" />
     [
       "meta",
@@ -26,7 +26,7 @@ export default defineConfig({
     ],
   ],
   themeConfig: {
-    logo: "/logo.awebp",
+    logo: "/logo.png",
     search: {
       provider: "local",
     },
